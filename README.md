@@ -137,5 +137,5 @@ If you want to sign up or register
 
 ## The rest Routes
 
- - "/" => Displaying welcome home respon
+ - "/" => Displaying welcome home response
  - Exception like 403 forbidden, 404 not found, etc 
