@@ -129,7 +129,7 @@ JWT_SECRET = "YOUR-SECRET"
 
 ## Authorization
 Before accessing POST, PUT, PATCH, and DELETE methods, you need to authorize token with JWT by login, after you got the token by login
-go to headers then input the key = "Authorization" with value "Bearer <your token>" in postman
+go to headers then input the key = "Authorization" with value "Bearer -your token-" in postman
 - "/login" => Login with your credientials to get the token. data required = email, password.
   
 If you want to sign up or register
