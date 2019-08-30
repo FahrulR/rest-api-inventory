@@ -15,7 +15,7 @@ exports.notFound = function(req, res) {
     res.send('404 Not Found!')
 };
 
-// Verify Token
+// Register with bcrypt hash
 
 exports.Register = function(req,res){
   // console.log("req",req.body);
@@ -123,4 +123,3 @@ connection.query(usernameQuery ,function (error, results, fields) {
         }
     })
 };
-
