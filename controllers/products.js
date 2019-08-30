@@ -34,6 +34,7 @@ exports.AllProducts = function (req, res) {
         });
     } else {
         connection.query(query + ' order by ' + sortBy + ' ' + sort + ' limit ' + page + ', ' + limit, function (err, results) {
+            // console.log(results) 
             if (results !== undefined) {
                 res.status(200).json({
                     status: 200,
@@ -148,11 +149,11 @@ exports.createProducts = function (req, res) {
         description,
         image,
         id_category,
-        quantity,
-        date_added,
-        date_updated
+        quantity
     } = req.body
-    if (!name || !description || !image || !id_category || !quantity || !date_added || !date_updated) {
+    const date = new Date()
+
+    if (!name || !description || !image || !id_category || !quantity) {
         res.status(300).json({
             status: 300,
             error: true,
@@ -160,7 +161,7 @@ exports.createProducts = function (req, res) {
         })
     } else {
         connection.query('INSERT INTO products (name, description, image, id_category, quantity, date_added, date_updated) values (?, ?, ?, ?, ?, ?, ?)',
-            [name, description, image, id_category, quantity, date_added, date_updated],
+            [name, description, image, id_category, quantity, date, date],
             function (err, results) {
                 if (err) {
                     console.log(err)
@@ -188,20 +189,19 @@ exports.updateProducts = function (req, res) {
         description,
         image,
         id_category,
-        quantity,
-        date_added,
-        date_updated
+        quantity
     } = req.body
+    const date = new Date()
 
-    if (!name || !description || !image || !id_category || !quantity || !date_added || !date_updated) {
+    if (!name || !description || !image || !id_category || !quantity) {
         res.status(300).json({
             status: 300,
             error: true,
             message: 'field needed for update!',
         })
     } else {
-        connection.query('UPDATE products SET name = ?, description = ?, image = ?, id_category = ?, quantity = ?, date_added = ?, date_updated = ? where id = ?',
-            [name, description, image, id_category, quantity, date_added, date_updated, req.params.id],
+        connection.query('UPDATE products SET name = ?, description = ?, image = ?, id_category = ?, quantity = ?, date_updated = ? where id = ?',
+            [name, description, image, id_category, quantity, date, req.params.id],
             function (err, results) {
                 if (err) {
                     console.log(err)
