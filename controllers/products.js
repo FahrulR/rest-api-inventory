@@ -8,22 +8,29 @@ exports.AllProducts = function (req, res) {
     const sortBy = req.query.sortBy || 'id';
     const sort = req.query.sort || 'ASC';
     const limit = req.query.limit || 10;
-    const page = (req.query.page - 1) * limit || 0;
+    const page = req.query.page || 1;
+    const skip = (Number(page) - 1) * limit 
     const search = req.query.search
     let query = 'select id, name, description, image,(select name from category where products.id_category = category.id) as category, quantity, date_added, date_updated from products';
 
-    if (req.query.search) {
-        connection.query(query + ' where name like "%' + search + '%" order by ' + sortBy + ' ' + sort + ' limit ' + page + ', ' + limit, function (err, results) {
+    if (search) {
+        connection.query(query + ' where name like "%' + search + '%" order by ' + sortBy + ' ' + sort + ' limit ' + skip + ', ' + limit, function (err, results) {
             console.log(req.body)
             if (err) {
                 console.log(err)
             } else if (results.length > 0) {
+                connection.query('select count(*) as total_data from products where name like "%'+search+'%"', function(err, total){
+               if(results) 
                 res.status(200).json({
                     status: 200,
                     error: false,
                     message: 'Successfully get the data with query search = ' + req.query.search,
-                    data: results
+                    data: results,
+                    page: page,
+                    limit: limit,
+                    total: total
                 })
+            })
             } else {
                 res.status(400).json({
                     status: 400,
@@ -33,15 +40,22 @@ exports.AllProducts = function (req, res) {
             }
         });
     } else {
-        connection.query(query + ' order by ' + sortBy + ' ' + sort + ' limit ' + page + ', ' + limit, function (err, results) {
+        connection.query(query + ' order by ' + sortBy + ' ' + sort + ' limit ' + skip + ', ' + limit, function (err, results) {
             // console.log(results) 
+            
             if (results !== undefined) {
+                connection.query('select count(*) as total_data from products', function(err, total){
                 res.status(200).json({
                     status: 200,
                     error: false,
                     message: 'Successfully get all the data',
                     data: results,
+                    page: page,
+                    limit: limit,
+                    total: total
                 })
+            })
+                
             } else {
                 res.status(400).json({
                     status: 400,
