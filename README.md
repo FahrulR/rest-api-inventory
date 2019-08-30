@@ -3,6 +3,8 @@ Restful API using Node js, Express and MySQL Database
 
 ----
 
+![](https://miro.medium.com/max/365/1*d2zLEjERsrs1Rzk_95QU9A.png)
+
 # File Structure
 
     - config
