@@ -9,7 +9,7 @@ exports.AllProducts = function (req, res) {
     const sort = req.query.sort || 'ASC';
     const limit = req.query.limit || 10;
     const page = req.query.page || 1;
-    const skip = (Number(page) - 1) * limit 
+    const skip = (page - 1) * limit 
     const search = req.query.search
     let query = 'select id, name, description, image,(select name from category where products.id_category = category.id) as category, quantity, date_added, date_updated from products';
 
