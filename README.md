@@ -46,7 +46,7 @@ To install dependencies enter project folder and run following command:
 
 ### Setting up database
 
-Import sql file from /sql/inventoryapp.sql to database
+Import sql file from /database/inventoryapp.sql to database
 
 
 ### Create Environment Variable
